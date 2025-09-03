@@ -8,7 +8,6 @@
 </head>
 <body>
 
-
 	<jsp:forward page="ClienteServlet" />
 
 </body>

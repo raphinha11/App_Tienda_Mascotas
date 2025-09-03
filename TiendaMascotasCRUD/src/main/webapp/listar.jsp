@@ -59,6 +59,24 @@
 				Cliente</a>
 		</div>
 	</div>
+	<div class="container mt-5">
+	
+	<form action="CorreoServlet" method="post" enctype="multipart/form-data" class="border p-4 bg-white rounded shadow-sm">
+	<h2 class="text-center mb-4">Correo</h2>
+	<div class="mb-3">
+    <label for="correo" class="form-label">Correo destino:</label> 
+    <input type="email" name="correo" required><br><br>
+    </div>
+    <div class="mb-3">
+    <label for="archivo" class="form-label">Selecciona un PDF:</label>
+    <input type="file" name="archivo" accept="application/pdf" required><br><br>
+    </div>
+    <button type="submit" class="btn btn-success">Enviar</button>
+    <button type="submit" name="accion" value="Reporte"
+	        class="btn btn-success">Generar Certificado</button>
+	<a href="verificarConexion.jsp" class="btn btn-secondary">Verificar	Conexión</a>
+    </form>
+    </div>
 
 	<!-- Bootstrap JS -->
 	<script

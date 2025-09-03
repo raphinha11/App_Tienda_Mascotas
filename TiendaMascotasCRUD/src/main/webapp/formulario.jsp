@@ -30,40 +30,46 @@
 			class="border p-4 bg-white rounded shadow-sm">
 
 			<div class="mb-3">
-				<label for="id_cliente" class="form-label">ID Cliente</label> <input
+				<label for="id_cliente" class="form-label">ID Cliente</label> 
+				<input
 					type="number" class="form-control" id="id_cliente"
 					name="id_cliente" value="<%= cliente.getIdCliente() %>">
 			</div>
 
 			<div class="mb-3">
 				<label for="numero_identidad" class="form-label">Número de
-					Identidad</label> <input type="number" class="form-control"
+					Identidad</label> 
+				<input type="number" class="form-control"
 					id="numero_identidad" name="numero_identidad"
 					value="<%= cliente.getNumeroIdentidad() %>" required>
 			</div>
 
 			<div class="mb-3">
-				<label for="nombres" class="form-label">Nombres</label> <input
+				<label for="nombres" class="form-label">Nombres</label> 
+				<input
 					type="text" class="form-control" id="nombres" name="nombres"
-					value="<%= cliente.getNombres() %>" required>
+					value="<%= cliente.getNombres() != null ? cliente.getNombres() : "" %>">
 			</div>
 
 			<div class="mb-3">
-				<label for="apellidos" class="form-label">Apellidos</label> <input
+				<label for="apellidos" class="form-label">Apellidos</label> 
+				<input
 					type="text" class="form-control" id="apellidos" name="apellidos"
-					value="<%= cliente.getApellidos() %>" required>
+					value="<%= cliente.getApellidos() != null ? cliente.getApellidos() : "" %>">
 			</div>
 
 			<div class="mb-3">
-				<label for="direccion" class="form-label">Dirección</label> <input
+				<label for="direccion" class="form-label">Dirección</label> 
+				<input
 					type="text" class="form-control" id="direccion" name="direccion"
-					value="<%= cliente.getDireccion() %>" required>
+					value="<%= cliente.getDireccion() != null ? cliente.getDireccion() : "" %>">
 			</div>
 
 			<div class="mb-3">
-				<label for="telefono" class="form-label">Teléfono</label> <input
+				<label for="telefono" class="form-label">Teléfono</label> 
+				<input
 					type="text" class="form-control" id="telefono" name="telefono"
-					value="<%= cliente.getTelefono() %>" required>
+					value="<%= cliente.getTelefono() != null ? cliente.getTelefono() : "" %>">
 			</div>
 
 			<div class="d-flex flex-wrap gap-2">
@@ -75,16 +81,19 @@
 					class="btn btn-danger">Eliminar</button>
 				<button type="submit" name="accion" value="Consultar"
 					class="btn btn-info">Consultar</button>
-				<a href="verificarConexion.jsp" class="btn btn-secondary">Verificar
-					Conexión</a>
+			    <button type="submit" name="accion" value="ReporteGeneral"
+	                class="btn btn-success">Reporte General</button>				
 			</div>
 
 			<div class="mt-3">
 				<a href="ClienteServlet" class="btn btn-outline-dark w-100">Volver
 					a la lista</a>
+					
 			</div>
 		</form>
+		
 	</div>
+
 
 	<!-- Bootstrap JS -->
 	<script
