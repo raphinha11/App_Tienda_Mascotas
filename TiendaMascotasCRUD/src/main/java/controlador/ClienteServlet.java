@@ -40,7 +40,7 @@ public class ClienteServlet extends HttpServlet {
                 c.setTelefono(request.getParameter("telefono"));
                 dao.agregar(c);
 
-                // 📧 Notificación por correo
+               //Notificacion por correo
                 EmailUtil.enviarCorreo(
                     "Nuevo cliente registrado",
                     "Se registró un nuevo cliente:\n" +
@@ -59,7 +59,7 @@ public class ClienteServlet extends HttpServlet {
                 c2.setTelefono(request.getParameter("telefono"));
                 dao.actualizar(c2);
 
-                // 📧 Notificación por correo
+              //Notificacion por correo
                 EmailUtil.enviarCorreo(
                     "Cliente actualizado",
                     "Se actualizó el cliente:\n" +
@@ -70,10 +70,10 @@ public class ClienteServlet extends HttpServlet {
 
             case "Eliminar":
                 int idEliminar = Integer.parseInt(request.getParameter("id_cliente"));
-                Cliente eliminado = dao.buscar(idEliminar); // Buscar antes de eliminar
+                Cliente eliminado = dao.buscar(idEliminar); //Buscar antes de eliminar
                 dao.eliminar(idEliminar);
 
-                // 📧 Notificación por correo
+              //Notificacion por correo
                 if (eliminado != null) {
                     EmailUtil.enviarCorreo(
                         "Cliente eliminado",
@@ -127,15 +127,163 @@ public class ClienteServlet extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
-    // ... (Tus métodos de generación de reportes quedan igual, sin cambios)
+   //la generación de reportes quedan igual
 
     private void generarReporte(Cliente cliente, HttpServletResponse response) {
-        // (Ya está implementado correctamente)
+        try {
+            response.setContentType("application/pdf");
+            response.setHeader("Content-Disposition", "attachment; filename=certificado_cliente_" + cliente.getIdCliente() + ".pdf");
+
+            PDDocument document = new PDDocument();
+            PDPage page = new PDPage(PDRectangle.LETTER);
+            document.addPage(page);
+
+            PDPageContentStream contentStream = new PDPageContentStream(document, page);
+
+            contentStream.beginText();
+            contentStream.setFont(PDType1Font.HELVETICA_BOLD, 20);
+            contentStream.newLineAtOffset(100, 700);
+            contentStream.showText("CERTIFICADO DE CLIENTE");
+            contentStream.endText();
+
+            float y = 660;
+            float leading = 20;
+            float fontSize = 12;
+
+            contentStream.beginText();
+            contentStream.setFont(PDType1Font.HELVETICA, fontSize);
+            contentStream.newLineAtOffset(100, y);
+
+            String[] lineas = {
+                "ID Cliente: " + cliente.getIdCliente(),
+                "Número de Identidad: " + cliente.getNumeroIdentidad(),
+                "Nombre: " + cliente.getNombres() + " " + cliente.getApellidos(),
+                "Dirección: " + cliente.getDireccion(),
+                "Teléfono: " + cliente.getTelefono()
+            };
+
+            for (String linea : lineas) {
+                contentStream.showText(linea);
+                contentStream.newLineAtOffset(0, -leading);
+            }
+
+            contentStream.endText();
+            contentStream.close();
+
+            document.save(response.getOutputStream());
+            document.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void generarReporteGeneral(HttpServletResponse response) {
-        // (Ya está implementado correctamente)
+        try {
+            response.setContentType("application/pdf");
+            response.setHeader("Content-Disposition", "attachment; filename=reporte_general_clientes.pdf");
+
+            PDDocument document = new PDDocument();
+            PDPage page = new PDPage(PDRectangle.LETTER);
+            document.addPage(page);
+
+            PDPageContentStream contentStream = new PDPageContentStream(document, page);
+            PDType1Font fontRegular = PDType1Font.HELVETICA;
+            PDType1Font fontBold = PDType1Font.HELVETICA_BOLD;
+            float fontSize = 9f;
+
+            float margin = 50;
+            float yStart = 730;
+            float yPosition = yStart;
+            float rowHeight = 15;
+            float tableWidth = page.getMediaBox().getWidth() - 2 * margin;
+
+            // Column widths (adjust as needed)
+            float[] colWidths = {40, 80, 100, 100, 100, 80}; // ID, Identidad, Nombre, Apellidos, Dirección, Teléfono
+            String[] headers = {"ID", "Identidad", "Nombre", "Apellidos", "Dirección", "Teléfono"};
+
+            // Draw Title
+            contentStream.beginText();
+            contentStream.setFont(fontBold, 14);
+            contentStream.newLineAtOffset(margin, yPosition);
+            contentStream.showText("Reporte General de Clientes");
+            contentStream.endText();
+
+            yPosition -= 25;
+
+            // Draw table headers
+            float textY = yPosition - 10;
+            float nextX = margin;
+
+            contentStream.setFont(fontBold, fontSize);
+            for (int i = 0; i < headers.length; i++) {
+                contentStream.beginText();
+                contentStream.newLineAtOffset(nextX, textY);
+                contentStream.showText(headers[i]);
+                contentStream.endText();
+                nextX += colWidths[i];
+            }
+
+            yPosition -= rowHeight;
+
+            // Fetch data
+            List<Cliente> clientes = dao.listar();
+
+            contentStream.setFont(fontRegular, fontSize);
+
+            for (Cliente cliente : clientes) {
+                // Salto de página si es necesario
+                if (yPosition < margin + rowHeight) {
+                    contentStream.close();
+                    page = new PDPage(PDRectangle.LETTER);
+                    document.addPage(page);
+                    contentStream = new PDPageContentStream(document, page);
+                    yPosition = yStart;
+                }
+
+                float xText = margin;
+                textY = yPosition - 10;
+
+                String[] data = {
+                    String.valueOf(cliente.getIdCliente()),
+                    String.valueOf(cliente.getNumeroIdentidad()),
+                    cliente.getNombres(),
+                    cliente.getApellidos(),
+                    cliente.getDireccion(),
+                    cliente.getTelefono()
+                };
+
+                for (int i = 0; i < data.length; i++) {
+                    contentStream.beginText();
+                    contentStream.newLineAtOffset(xText, textY);
+                    contentStream.showText(truncateText(data[i], colWidths[i], fontRegular, fontSize));
+                    contentStream.endText();
+                    xText += colWidths[i];
+                }
+
+                yPosition -= rowHeight;
+            }
+
+            contentStream.close();
+            document.save(response.getOutputStream());
+            document.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
+    private String truncateText(String text, float maxWidth, PDType1Font font, float fontSize) throws IOException {
+        String result = text;
+        while (font.getStringWidth(result) / 1000 * fontSize > maxWidth && result.length() > 0) {
+            result = result.substring(0, result.length() - 1);
+        }
+        if (!result.equals(text)) {
+            result += "...";
+        }
+        return result;
+    }
+
 
     private List<String> breakLines(String text, float maxWidth, PDType1Font font, float fontSize) throws IOException {
         List<String> lines = new ArrayList<>();

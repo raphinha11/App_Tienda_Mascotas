@@ -81,8 +81,10 @@
 					class="btn btn-danger">Eliminar</button>
 				<button type="submit" name="accion" value="Consultar"
 					class="btn btn-info">Consultar</button>
-			    <button type="submit" name="accion" value="ReporteGeneral"
-	                class="btn btn-success">Reporte General</button>				
+			    <button type="submit" name="accion" value="Reporte"
+	                class="btn btn-success">Generar Certificado</button>
+	            <button type="submit" name="accion" value="ReporteGeneral"
+	                class="btn btn-success">Reporte General</button>			
 			</div>
 
 			<div class="mt-3">
