@@ -74,17 +74,17 @@
 
 			<div class="d-flex flex-wrap gap-2">
 				<button type="submit" name="accion" value="Guardar"
-					class="btn btn-primary">Guardar</button>
+					class="btn btn-primary">🗃️ Guardar</button>
 				<button type="submit" name="accion" value="Actualizar"
-					class="btn btn-warning">Actualizar</button>
+					class="btn btn-warning">🔁 Actualizar</button>
 				<button type="submit" name="accion" value="Eliminar"
-					class="btn btn-danger">Eliminar</button>
+					class="btn btn-danger">✖️ Eliminar</button>
 				<button type="submit" name="accion" value="Consultar"
-					class="btn btn-info">Consultar</button>
+					class="btn btn-info">🔎 Consultar</button>
 			    <button type="submit" name="accion" value="Reporte"
-	                class="btn btn-success">Generar Certificado</button>
+	                class="btn btn-success">📄 Generar Certificado</button>
 	            <button type="submit" name="accion" value="ReporteGeneral"
-	                class="btn btn-success">Reporte General</button>			
+	                class="btn btn-success">🗳️ Reporte General</button>			
 			</div>
 
 			<div class="mt-3">

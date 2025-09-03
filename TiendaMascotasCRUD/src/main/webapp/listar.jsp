@@ -19,7 +19,7 @@
 <body class="bg-light">
 
 	<div class="container mt-5">
-		<h2 class="text-center text-primary mb-4">Clientes Registrados</h2>
+		<h2 class="text-center text-primary mb-4">👨🏼‍💻 Clientes Registrados</h2>
 
 		<div class="table-responsive">
 			<table class="table table-striped table-bordered align-middle">

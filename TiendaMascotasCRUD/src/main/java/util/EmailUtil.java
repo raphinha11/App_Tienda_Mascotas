@@ -19,6 +19,7 @@ public class EmailUtil {
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
 
+        //Crea una sesion autenticada con el servidor SMTP usando el correo y la contraseña
         Session session = Session.getInstance(props,
             new Authenticator() {
                 protected PasswordAuthentication getPasswordAuthentication() {
@@ -27,6 +28,7 @@ public class EmailUtil {
             });
 
         try {
+        	//Creacion y envio del mensaje
             Message mensaje = new MimeMessage(session);
             mensaje.setFrom(new InternetAddress(REMITENTE));
             mensaje.setRecipients(Message.RecipientType.TO, InternetAddress.parse(DESTINATARIO));

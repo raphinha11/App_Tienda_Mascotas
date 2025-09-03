@@ -198,11 +198,11 @@ public class ClienteServlet extends HttpServlet {
             float rowHeight = 15;
             float tableWidth = page.getMediaBox().getWidth() - 2 * margin;
 
-            // Column widths (adjust as needed)
+            // Anchos de columna
             float[] colWidths = {40, 80, 100, 100, 100, 80}; // ID, Identidad, Nombre, Apellidos, Dirección, Teléfono
             String[] headers = {"ID", "Identidad", "Nombre", "Apellidos", "Dirección", "Teléfono"};
 
-            // Draw Title
+            // Título del sorteo
             contentStream.beginText();
             contentStream.setFont(fontBold, 14);
             contentStream.newLineAtOffset(margin, yPosition);
@@ -211,7 +211,7 @@ public class ClienteServlet extends HttpServlet {
 
             yPosition -= 25;
 
-            // Draw table headers
+            // Dibujar encabezados de tabla
             float textY = yPosition - 10;
             float nextX = margin;
 
@@ -226,7 +226,7 @@ public class ClienteServlet extends HttpServlet {
 
             yPosition -= rowHeight;
 
-            // Fetch data
+            //   Obtener datos
             List<Cliente> clientes = dao.listar();
 
             contentStream.setFont(fontRegular, fontSize);
