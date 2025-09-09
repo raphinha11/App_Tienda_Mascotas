@@ -20,6 +20,12 @@
 
 	<div class="container mt-5">
 		<h2 class="text-center text-primary mb-4">👨🏼‍💻 Clientes Registrados</h2>
+		
+		<div class="text-center mt-4">
+			<a href="formulario.jsp" class="btn btn-success">Agregar Nuevo Cliente ➕</a>
+			<a href="verificarConexion.jsp" class="btn btn-secondary">Verificar	Conexión 🛜</a>
+			<br><br>
+		</div>
 
 		<div class="table-responsive">
 			<table class="table table-striped table-bordered align-middle">
@@ -54,12 +60,35 @@
 			</table>
 		</div>
 
-		<div class="text-center mt-4">
-			<a href="formulario.jsp" class="btn btn-success">Agregar Nuevo
-				Cliente</a>
-			<a href="verificarConexion.jsp" class="btn btn-secondary">Verificar	Conexión</a>
-		</div>
+		
 	</div>
+	
+	<%
+    Integer currentPage = (Integer) request.getAttribute("currentPage");
+    Integer totalPages = (Integer) request.getAttribute("totalPages");
+%>
+
+<% if (totalPages != null && totalPages > 1) { %>
+<nav aria-label="Paginación">
+    <ul class="pagination justify-content-center">
+        <li class="page-item <%= (currentPage <= 1) ? "disabled" : "" %>">
+            <a class="page-link" href="ClienteServlet?page=<%= currentPage - 1 %>">Anterior</a>
+        </li>
+
+        <% for (int i = 1; i <= totalPages; i++) { %>
+            <li class="page-item <%= (i == currentPage) ? "active" : "" %>">
+                <a class="page-link" href="ClienteServlet?page=<%= i %>"><%= i %></a>
+            </li>
+        <% } %>
+
+        <li class="page-item <%= (currentPage >= totalPages) ? "disabled" : "" %>">
+            <a class="page-link" href="ClienteServlet?page=<%= currentPage + 1 %>">Siguiente</a>
+        </li>
+    </ul>
+</nav>
+<% } %>
+
+	
 	<div class="container mt-5">
 	<form action="CorreoServlet" method="post" enctype="multipart/form-data" class="border p-4 bg-white rounded shadow-sm">
 		<h2 class="text-center mb-4">Enviar PDF por Correo</h2>
@@ -74,7 +103,7 @@
 			<input type="file" name="archivo" accept="application/pdf" class="form-control" required>
 		</div>
 
-		<button type="submit" class="btn btn-success">Enviar</button>
+		<button type="submit" class="btn btn-success">Enviar 📧</button>
 	</form>
 </div>
 

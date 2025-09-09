@@ -3,9 +3,13 @@ package modelo;
 import java.sql.*;
 import java.util.*;
 
+/*ClienteDAO. Para gestionar operaciones CRUD sobre la entidad cliente en
+ * la base de datos.*/
+
 public class ClienteDAO {
     Conexion cn = new Conexion();
 
+    // Retorna una lista de todos los clientes registrados en la tabla tbl_cliente
     public List<Cliente> listar() {
         List<Cliente> lista = new ArrayList<>();
         String sql = "SELECT * FROM tbl_cliente";
@@ -16,6 +20,7 @@ public class ClienteDAO {
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
+         // Recorre el resultado y llenar la lista
             while (rs.next()) {
                 Cliente c = new Cliente();
                 c.setIdCliente(rs.getInt(1));
@@ -36,6 +41,7 @@ public class ClienteDAO {
         return lista;
     }
 
+    //Inserta un nuevo cliente en la base de datos
     public void agregar(Cliente c) {
         String sql = "INSERT INTO tbl_cliente (numero_identidad, nombres, apellidos, direccion, telefono) VALUES (?, ?, ?, ?, ?)";
         Connection con = null;
@@ -57,6 +63,7 @@ public class ClienteDAO {
         }
     }
 
+    //Busca un cliente especifico por su ID
     public Cliente buscar(int id) {
         Cliente c = null;
         String sql = "SELECT * FROM tbl_cliente WHERE id_cliente=?";
@@ -87,6 +94,7 @@ public class ClienteDAO {
         return c;
     }
 
+    //Actualiza los datos de un cliente existente
     public void actualizar(Cliente c) {
         String sql = "UPDATE tbl_cliente SET numero_identidad=?, nombres=?, apellidos=?, direccion=?, telefono=? WHERE id_cliente=?";
         Connection con = null;
@@ -109,6 +117,7 @@ public class ClienteDAO {
         }
     }
 
+    //Elimina un cliente de la base de datos por su ID
     public void eliminar(int id) {
         String sql = "DELETE FROM tbl_cliente WHERE id_cliente=?";
         Connection con = null;

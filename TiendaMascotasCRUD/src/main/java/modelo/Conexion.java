@@ -5,6 +5,9 @@ import java.sql.DriverManager;
 
 public class Conexion {
     Connection con;
+    /* Esta clase gestiona la conexion a una base de datos MySQL utilizando JDBC.
+     * Define un metodo publico getConnetion() que carga el driver de MySQL, establece
+     * una conexion a una base de datos especifica y retorna como objeto connection.*/
 
     public Connection getConnection() {
         try {

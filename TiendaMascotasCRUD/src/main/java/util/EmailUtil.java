@@ -6,6 +6,11 @@ import jakarta.mail.internet.MimeMessage;
 
 import java.util.Properties;
 
+/* La clase EmailUtil encapsula la logica para enviar correos de texto plano
+ * mediante SMTP (usando Gmail como proveedor) esta utilidad es utilizada, por
+ * ejemplo, para notificar eventos como la creacion, actualizacion o eliminacion
+ * de un cliente en el sistema.*/
+
 public class EmailUtil {
 
     private static final String REMITENTE = "salvatoredeleone.10@gmail.com";
@@ -19,7 +24,7 @@ public class EmailUtil {
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
 
-        //Crea una sesion autenticada con el servidor SMTP usando el correo y la contraseña
+        //Crea una sesion autenticada con el servidor SMTP (Protocolo de transferencia Simple) usando el correo y la contraseña
         Session session = Session.getInstance(props,
             new Authenticator() {
                 protected PasswordAuthentication getPasswordAuthentication() {
