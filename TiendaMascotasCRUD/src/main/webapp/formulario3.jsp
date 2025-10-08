@@ -1,8 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%
-    modelo.Cliente cliente = (modelo.Cliente) request.getAttribute("cliente");
-    if (cliente == null) {
-        cliente = new modelo.Cliente();
+    modelo.Producto producto = (modelo.Producto) request.getAttribute("producto");
+    if (producto == null) {
+    	producto = new modelo.Producto();
     }
     String mensaje = (String) request.getAttribute("mensaje");
     String tipoMensaje = (String) request.getAttribute("tipoMensaje"); // "success" o "danger"
@@ -11,7 +11,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Formulario Cliente</title>
+<title>Formulario Producto</title>
 
 <!-- Bootstrap CSS -->
 <link rel="stylesheet"
@@ -57,67 +57,51 @@
     <div class="container">
         <div class="card shadow-sm">
             <div class="card-header bg-primary text-white text-center fw-bold">
-                📋 Formulario de Cliente
+                📋 Formulario de Productos
             </div>
             <div class="card-body">
-                <form action="ClienteServlet" method="post">
+                <form action="ProductoServlet" method="post">
 
                     <div class="mb-3">
-                        <label for="id_cliente" class="form-label">ID Cliente</label>
-                        <input type="number" class="form-control" id="id_cliente"
-                            name="id_cliente" value="<%= cliente.getIdCliente() %>">
+                        <label for="codigo_barras" class="form-label">Codigo de Barras</label>
+                        <input type="number" class="form-control" id="codigo_barras"
+                            name="codigo_barras" value="<%= producto.getCodigo_barras() %>">
                     </div>
 
                     <div class="mb-3">
-                        <label for="numero_identidad" class="form-label">Número de Identidad</label>
-                        <input type="number" class="form-control" id="numero_identidad"
-                            name="numero_identidad" value="<%= cliente.getNumeroIdentidad() %>" required>
+                        <label for="nombre_producto" class="form-label">Nombre de Producto</label>
+                        <input type="text" class="form-control" id="nombre_producto"
+                            name="nombre_producto" value="<%= producto.getNombre_producto() != null ? producto.getNombre_producto() : "" %>">
                     </div>
 
                     <div class="mb-3">
-                        <label for="nombres" class="form-label">Nombres</label>
-                        <input type="text" class="form-control" id="nombres"
-                            name="nombres"
-                            value="<%= cliente.getNombres() != null ? cliente.getNombres() : "" %>">
+                        <label for="marca" class="form-label">Marca</label>
+                        <input type="text" class="form-control" id="marca"
+                            name="marca"
+                            value="<%= producto.getMarca() != null ? producto.getMarca() : "" %>">
                     </div>
 
                     <div class="mb-3">
-                        <label for="apellidos" class="form-label">Apellidos</label>
-                        <input type="text" class="form-control" id="apellidos"
-                            name="apellidos"
-                            value="<%= cliente.getApellidos() != null ? cliente.getApellidos() : "" %>">
+                        <label for="precio" class="form-label">Precio</label>
+                        <input type="text" class="form-control" id="precio"
+                            name="precio"
+                            value="<%= producto.getPrecio() %>">
                     </div>
 
-                    <div class="mb-3">
-                        <label for="direccion" class="form-label">Dirección</label>
-                        <input type="text" class="form-control" id="direccion"
-                            name="direccion"
-                            value="<%= cliente.getDireccion() != null ? cliente.getDireccion() : "" %>">
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="telefono" class="form-label">Teléfono</label>
-                        <input type="text" class="form-control" id="telefono"
-                            name="telefono"
-                            value="<%= cliente.getTelefono() != null ? cliente.getTelefono() : "" %>">
-                    </div>
 
                     <div class="d-flex flex-wrap gap-2 mb-3">
                         <button type="submit" name="accion" value="Guardar" class="btn btn-primary flex-fill">🗃️ Guardar</button>
                         <button type="submit" name="accion" value="Actualizar" class="btn btn-warning flex-fill">🔁 Actualizar</button>
                         <button type="submit" name="accion" value="Eliminar" class="btn btn-danger flex-fill">✖️ Eliminar</button>
                         <button type="submit" name="accion" value="Consultar" class="btn btn-info flex-fill">🔎 Consultar</button>
-                        <button type="submit" name="accion" value="ReporteGeneral" class="btn btn-primary flex-fill">📄 Generar Reporte</button>
-                        <button type="submit" name="accion" value="Reporte" class="btn btn-info flex-fill">🗳️ Certificado</button>
                     </div>
 
                     <div class="d-flex flex-wrap gap-2 mb-3">
-                        <button type="submit" name="accion" value="Reporte" class="btn btn-success flex-fill">📄 Generar Certificado</button>
                         <button type="submit" name="accion" value="ReporteGeneral" class="btn btn-success flex-fill">🗳️ Reporte General</button>
                     </div>
 
                     <div class="mt-3">
-                        <a href="ClienteServlet" class="btn btn-outline-dark w-100">⬅️ Volver a la lista</a><br><br>
+                        <a href="ProductoServlet" class="btn btn-outline-dark w-100">⬅️ Volver a la lista</a><br><br>
                          <a href="${pageContext.request.contextPath}/InicioServlet" class="btn btn-outline-dark w-100">🏠 Inicio</a>
                     </div>
                 </form>
@@ -127,7 +111,7 @@
 
     <!-- Footer -->
     <footer class="bg-dark text-white text-center py-3 mt-5">
-        <p class="mb-0">&copy; 2025 Tienda de Mascotas | Módulo de Clientes</p>
+        <p class="mb-0">&copy; 2025 Tienda de Mascotas | Módulo de Productos</p>
     </footer>
 
     <!-- Bootstrap JS -->

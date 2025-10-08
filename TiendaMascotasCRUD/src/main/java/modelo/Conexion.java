@@ -2,6 +2,7 @@ package modelo;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 
 public class Conexion {
     Connection con;
@@ -21,4 +22,9 @@ public class Conexion {
         }
         return con;
     }
+
+	public PreparedStatement prepareStatement(String sql) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

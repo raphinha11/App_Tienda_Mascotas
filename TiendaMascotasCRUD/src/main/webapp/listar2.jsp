@@ -1,9 +1,9 @@
+<%@page import="modelo.Mascota"%>
 <%@ page import="java.util.List"%>
-<%@ page import="modelo.Cliente"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 
 <%
-    List<Cliente> clientes = (List<Cliente>) request.getAttribute("clientes");
+    List<Mascota> mascotas = (List<Mascota>) request.getAttribute("mascotas");
     Integer currentPage = (Integer) request.getAttribute("currentPage");
     Integer totalPages = (Integer) request.getAttribute("totalPages");
 %>
@@ -12,7 +12,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Clientes - Tienda de Mascotas</title>
+<title>Mascotas - Tienda de Mascotas</title>
 
 <!-- Bootstrap CSS -->
 <link rel="stylesheet"
@@ -26,7 +26,7 @@
         margin-bottom: 30px;
     }
     .table thead {
-        background-color: #198754;
+        background-color: #0d6efd;
         color: white;
     }
     .form-section {
@@ -54,11 +54,11 @@
 
     <!-- Título -->
     <div class="container">
-        <h2 class="text-center text-success fw-bold mb-4">👨🏼‍💻 Clientes Registrados</h2>
+        <h2 class="text-center text-primary fw-bold mb-4">🐕‍🦺 Mascotas Registradas</h2>
 
         <!-- Botones de acción -->
         <div class="text-center mb-4">
-            <a href="formulario.jsp" class="btn btn-success me-2">➕ Agregar Cliente</a>
+            <a href="formulario2.jsp" class="btn btn-success me-2">➕ Agregar Mascota</a>
             <a href="verificarConexion.jsp" class="btn btn-secondary">🛜 Verificar Conexión</a>
         </div>
 
@@ -68,32 +68,32 @@
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Número Identidad</th>
-                        <th>Nombres</th>
-                        <th>Apellidos</th>
-                        <th>Dirección</th>
-                        <th>Teléfono</th>
+                        <th>Nombre</th>
+                        <th>Tipo</th>
+                        <th>Género</th>
+                        <th>Raza</th>
+                        <th>Cédula Cliente</th>
                     </tr>
                 </thead>
                 <tbody>
                     <%
-                        if (clientes != null && !clientes.isEmpty()) {
-                            for (Cliente c : clientes) {
+                        if (mascotas != null && !mascotas.isEmpty()) {
+                            for (Mascota m : mascotas) {
                     %>
                     <tr>
-                        <td><%= c.getIdCliente() %></td>
-                        <td><%= c.getNumeroIdentidad() %></td>
-                        <td><%= c.getNombres() %></td>
-                        <td><%= c.getApellidos() %></td>
-                        <td><%= c.getDireccion() %></td>
-                        <td><%= c.getTelefono() %></td>
+                        <td><%= m.getId_mascota() %></td>
+                        <td><%= m.getNombre() %></td>
+                        <td><%= m.getTipo() %></td>
+                        <td><%= m.getGenero() %></td>
+                        <td><%= m.getRaza() %></td>
+                        <td><%= m.getCedula_cliente() %></td>
                     </tr>
                     <%
                             }
                         } else {
                     %>
                     <tr>
-                        <td colspan="6" class="text-muted">No hay clientes registrados.</td>
+                        <td colspan="6" class="text-muted">No hay mascotas registradas.</td>
                     </tr>
                     <%
                         }
@@ -107,41 +107,25 @@
         <nav aria-label="Paginación">
             <ul class="pagination justify-content-center">
                 <li class="page-item <%= (currentPage <= 1) ? "disabled" : "" %>">
-                    <a class="page-link" href="ClienteServlet?page=<%= currentPage - 1 %>">Anterior</a>
+                    <a class="page-link" href="MascotaServlet?page=<%= currentPage - 1 %>">Anterior</a>
                 </li>
                 <% for (int i = 1; i <= totalPages; i++) { %>
                     <li class="page-item <%= (i == currentPage) ? "active" : "" %>">
-                        <a class="page-link" href="ClienteServlet?page=<%= i %>"><%= i %></a>
+                        <a class="page-link" href="MascotaServlet?page=<%= i %>"><%= i %></a>
                     </li>
                 <% } %>
                 <li class="page-item <%= (currentPage >= totalPages) ? "disabled" : "" %>">
-                    <a class="page-link" href="ClienteServlet?page=<%= currentPage + 1 %>">Siguiente</a>
+                    <a class="page-link" href="MascotaServlet?page=<%= currentPage + 1 %>">Siguiente</a>
                 </li>
             </ul>
         </nav>
         <% } %>
 
-        <!-- Enviar PDF -->
-        <div class="form-section">
-            <h4 class="text-center text-primary mb-3">📧 Enviar PDF por Correo</h4>
-            <form action="CorreoServlet" method="post" enctype="multipart/form-data">
-                <div class="mb-3">
-                    <label for="correo" class="form-label">Correo destino:</label>
-                    <input type="email" name="correo" class="form-control" required>
-                </div>
-                <div class="mb-3">
-                    <label for="archivo" class="form-label">Selecciona un PDF:</label>
-                    <input type="file" name="archivo" accept="application/pdf" class="form-control" required>
-                </div>
-                <button type="submit" class="btn btn-success w-100">Enviar 📩</button>
-            </form>
-        </div>
-
     </div>
 
     <!-- Footer -->
     <footer class="bg-dark text-white text-center py-3 mt-5">
-        <p class="mb-0">&copy; 2025 Tienda de Mascotas | Módulo de Clientes</p>
+        <p class="mb-0">&copy; 2025 Tienda de Mascotas | Módulo de Mascotas</p>
     </footer>
 
     <!-- JS -->

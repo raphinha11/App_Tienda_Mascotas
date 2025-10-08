@@ -1,9 +1,9 @@
 <%@ page import="java.util.List"%>
-<%@ page import="modelo.Cliente"%>
+<%@ page import="modelo.Producto"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 
 <%
-    List<Cliente> clientes = (List<Cliente>) request.getAttribute("clientes");
+    List<Producto> productos = (List<Producto>) request.getAttribute("productos");
     Integer currentPage = (Integer) request.getAttribute("currentPage");
     Integer totalPages = (Integer) request.getAttribute("totalPages");
 %>
@@ -12,7 +12,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Clientes - Tienda de Mascotas</title>
+<title>Productos - Tienda de Mascotas</title>
 
 <!-- Bootstrap CSS -->
 <link rel="stylesheet"
@@ -54,12 +54,11 @@
 
     <!-- Título -->
     <div class="container">
-        <h2 class="text-center text-success fw-bold mb-4">👨🏼‍💻 Clientes Registrados</h2>
+        <h2 class="text-center text-success fw-bold mb-4">👨🏼‍💻 Productos Registrados</h2>
 
         <!-- Botones de acción -->
         <div class="text-center mb-4">
-            <a href="formulario.jsp" class="btn btn-success me-2">➕ Agregar Cliente</a>
-            <a href="verificarConexion.jsp" class="btn btn-secondary">🛜 Verificar Conexión</a>
+            <a href="formulario3.jsp" class="btn btn-success me-2">➕ Agregar Producto</a>
         </div>
 
         <!-- Tabla -->
@@ -67,33 +66,29 @@
             <table class="table table-striped table-bordered align-middle text-center">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Número Identidad</th>
-                        <th>Nombres</th>
-                        <th>Apellidos</th>
-                        <th>Dirección</th>
-                        <th>Teléfono</th>
+                        <th>Codigo Barras</th>
+                        <th>Nombre de Producto</th>
+                        <th>Marca</th>
+                        <th>Precio</th>
                     </tr>
                 </thead>
                 <tbody>
                     <%
-                        if (clientes != null && !clientes.isEmpty()) {
-                            for (Cliente c : clientes) {
+                        if (productos != null && !productos.isEmpty()) {
+                            for (Producto c : productos) {
                     %>
                     <tr>
-                        <td><%= c.getIdCliente() %></td>
-                        <td><%= c.getNumeroIdentidad() %></td>
-                        <td><%= c.getNombres() %></td>
-                        <td><%= c.getApellidos() %></td>
-                        <td><%= c.getDireccion() %></td>
-                        <td><%= c.getTelefono() %></td>
+                        <td><%= c.getCodigo_barras() %></td>
+                        <td><%= c.getNombre_producto() %></td>
+                        <td><%= c.getMarca() %></td>
+                        <td><%= c.getPrecio() %></td>
                     </tr>
                     <%
                             }
                         } else {
                     %>
                     <tr>
-                        <td colspan="6" class="text-muted">No hay clientes registrados.</td>
+                        <td colspan="6" class="text-muted">No hay productos registrados.</td>
                     </tr>
                     <%
                         }
@@ -107,41 +102,26 @@
         <nav aria-label="Paginación">
             <ul class="pagination justify-content-center">
                 <li class="page-item <%= (currentPage <= 1) ? "disabled" : "" %>">
-                    <a class="page-link" href="ClienteServlet?page=<%= currentPage - 1 %>">Anterior</a>
+                    <a class="page-link" href="ProductoServlet?page=<%= currentPage - 1 %>">Anterior</a>
                 </li>
                 <% for (int i = 1; i <= totalPages; i++) { %>
                     <li class="page-item <%= (i == currentPage) ? "active" : "" %>">
-                        <a class="page-link" href="ClienteServlet?page=<%= i %>"><%= i %></a>
+                        <a class="page-link" href="ProductoServlet?page=<%= i %>"><%= i %></a>
                     </li>
                 <% } %>
                 <li class="page-item <%= (currentPage >= totalPages) ? "disabled" : "" %>">
-                    <a class="page-link" href="ClienteServlet?page=<%= currentPage + 1 %>">Siguiente</a>
+                    <a class="page-link" href="ProductoServlet?page=<%= currentPage + 1 %>">Siguiente</a>
                 </li>
             </ul>
         </nav>
         <% } %>
 
-        <!-- Enviar PDF -->
-        <div class="form-section">
-            <h4 class="text-center text-primary mb-3">📧 Enviar PDF por Correo</h4>
-            <form action="CorreoServlet" method="post" enctype="multipart/form-data">
-                <div class="mb-3">
-                    <label for="correo" class="form-label">Correo destino:</label>
-                    <input type="email" name="correo" class="form-control" required>
-                </div>
-                <div class="mb-3">
-                    <label for="archivo" class="form-label">Selecciona un PDF:</label>
-                    <input type="file" name="archivo" accept="application/pdf" class="form-control" required>
-                </div>
-                <button type="submit" class="btn btn-success w-100">Enviar 📩</button>
-            </form>
-        </div>
 
     </div>
 
     <!-- Footer -->
     <footer class="bg-dark text-white text-center py-3 mt-5">
-        <p class="mb-0">&copy; 2025 Tienda de Mascotas | Módulo de Clientes</p>
+        <p class="mb-0">&copy; 2025 Tienda de Mascotas | Módulo de Productos</p>
     </footer>
 
     <!-- JS -->

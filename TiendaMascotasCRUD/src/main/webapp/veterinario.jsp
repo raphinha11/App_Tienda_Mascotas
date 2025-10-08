@@ -1,10 +1,21 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="modelo.Usuario" %>
+<%
+    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+    response.setHeader("Pragma", "no-cache");
+    response.setDateHeader("Expires", 0);
+
+    modelo.Usuario usuario = (modelo.Usuario) session.getAttribute("usuario");
+    if (usuario == null) {
+        response.sendRedirect("login.jsp");
+        return;
+    }
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Tienda de Mascotas</title>
+<title>Panel del Veterinario</title>
 
 <link rel="stylesheet"
     href="${pageContext.request.contextPath}/bootstrap/css/bootstrap.min.css">
@@ -30,42 +41,31 @@
         object-fit: cover;
     }
 </style>
+
 </head>
 <body>
-
+    
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
             <a class="navbar-brand" href="#">🐾 Tienda de Mascotas</a>
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="ClienteServlet">Clientes</a></li>
                     <li class="nav-item"><a class="nav-link" href="MascotaServlet">Mascotas</a></li>
+                    <li class="nav-item"><a class="nav-link text-danger" href="logout.jsp">Cerrar sesión</a></li>
                 </ul>
             </div>
         </div>
     </nav>
-
+    
     <!-- Hero -->
     <section class="hero">
-        <h1 class="display-4 fw-bold">Bienvenido a la Tienda de Mascotas</h1>
+        <h1 class="display-4 fw-bold">Bienvenido, <%= ((modelo.Usuario)session.getAttribute("usuario")).getUsuario() %> 🐶</h1>
     </section>
-
-    <!-- Opciones principales -->
+    
     <div class="container text-center mt-5">
         <div class="row">
-            <div class="col-md-6 mb-4">
-                <div class="card shadow-sm">
-                    <img src="https://blog.coomeva.com.co/uploads/644986e632bec.webp" class="card-img-top" alt="Clientes">
-                    <div class="card-body">
-                        <h5 class="card-title">Gestión de Clientes</h5>
-                        <p class="card-text">Administra la información de tus clientes de manera fácil.</p>
-                        <a href="ClienteServlet" class="btn btn-outline-dark w-100">Ir a Clientes</a>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-md-6 mb-4">
+          <div class="col-md-6 mb-4">
                 <div class="card shadow-sm">
                     <img src="https://aishlatino.b-cdn.net/wp-content/uploads/2021/11/leyes-judias-sobre-mascotas-730x411-SP.jpg" class="card-img-top" alt="Mascotas">
                     <div class="card-body">
@@ -78,10 +78,11 @@
         </div>
     </div>
 
-    <!-- Footer -->
+   <!-- Footer -->
     <footer class="bg-dark text-white text-center py-3 mt-5">
         <p class="mb-0">&copy; 2025 Tienda de Mascotas. Todos los derechos reservados.</p>
     </footer>
 
+    <script src="${pageContext.request.contextPath}/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
