@@ -129,4 +129,31 @@ public class ProductoDAO {
 		
 	}
 	
+	public List<Producto> buscarPorNombreOMarca(String texto) {
+	    List<Producto> lista = new ArrayList<>();
+	    String sql = "SELECT * FROM tbl_producto WHERE nombre_producto LIKE ? OR marca LIKE ?";
+	    Connection con = null;
+	    PreparedStatement ps = null;
+	    ResultSet rs = null;
+	    try {
+	        con = cn.getConnection();
+	        ps = con.prepareStatement(sql);
+	        ps.setString(1, "%" + texto + "%");
+	        ps.setString(2, "%" + texto + "%");
+	        rs = ps.executeQuery();
+	        while (rs.next()) {
+	            Producto p = new Producto();
+	            p.setCodigo_barras(rs.getInt("codigo_barras"));
+	            p.setNombre_producto(rs.getString("nombre_producto"));
+	            p.setMarca(rs.getString("marca"));
+	            p.setPrecio(rs.getDouble("precio"));
+	            lista.add(p);
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return lista;
+	}
+
+	
 }

@@ -96,7 +96,9 @@
                 <input type="password" class="form-control" id="contrasena" name="contrasena" placeholder="Ingrese su contraseña" required>
             </div>
 
-            <button type="submit" class="btn btn-login w-100 py-2">Ingresar</button>
+            <button type="submit" class="btn btn-login w-100 py-2">Ingresar</button><br><br>
+            <a href="registro.jsp" class="btn btn-success me-2">Registrase</a>
+            
 
             <p class="error">
                 <%= request.getAttribute("mensaje") != null ? request.getAttribute("mensaje") : "" %>

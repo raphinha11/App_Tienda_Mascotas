@@ -10,11 +10,12 @@ public class UsuarioDAO {
     PreparedStatement ps;
     ResultSet rs;
 
+    // ✅ Validar usuario
     public Usuario validar(String usuario, String contrasena) {
         Usuario u = null;
         String sql = "SELECT * FROM tbl_usuario WHERE usuario=? AND contrasena=?";
         try {
-            con = cn.getConnection(); // ✅ obtienes la conexión desde tu clase Conexion
+            con = cn.getConnection();
             ps = con.prepareStatement(sql);
             ps.setString(1, usuario);
             ps.setString(2, contrasena);
@@ -39,5 +40,29 @@ public class UsuarioDAO {
             }
         }
         return u;
+    }
+
+    // ✅ Registrar usuario
+    public boolean registrar(Usuario u) {
+        String sql = "INSERT INTO tbl_usuario (usuario, contrasena, correo, rol) VALUES (?, ?, ?, ?)";
+        try (Connection con = getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, u.getUsuario());
+            ps.setString(2, u.getContrasena());
+            ps.setString(3, u.getCorreo());
+            ps.setString(4, u.getRol());
+            ps.executeUpdate();
+            return true;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    // ✅ Conexión corregida
+    private Connection getConnection() {
+        return cn.getConnection();
     }
 }

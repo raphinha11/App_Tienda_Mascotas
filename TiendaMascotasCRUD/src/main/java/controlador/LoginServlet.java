@@ -25,12 +25,19 @@ public class LoginServlet extends HttpServlet {
             HttpSession sesion = request.getSession();
             sesion.setAttribute("usuario", u);
 
-            if ("admin".equals(u.getRol())) {
-                response.sendRedirect("admin.jsp");
-            } else if ("veterinario".equals(u.getRol())) {
-                response.sendRedirect("veterinario.jsp");
-            } else {
-                response.sendRedirect("error.jsp");
+            switch (u.getRol()) {
+                case "admin":
+                    response.sendRedirect("admin.jsp");
+                    break;
+                case "veterinario":
+                    response.sendRedirect("veterinario.jsp");
+                    break;
+                case "cliente":
+                    response.sendRedirect("cliente.jsp");
+                    break;
+                default:
+                    response.sendRedirect("error.jsp");
+                    break;
             }
         } else {
             request.setAttribute("mensaje", "Usuario o contraseña incorrectos");

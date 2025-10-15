@@ -89,6 +89,25 @@ public class ProductoServlet extends HttpServlet {
 
     @Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	String accion = request.getParameter("accion");
+    	
+    	if (accion != null && accion.equals("tienda")) {
+            String buscar = request.getParameter("buscar");
+            List<Producto> lista;
+
+            if (buscar != null && !buscar.trim().isEmpty()) {
+                lista = dao.buscarPorNombreOMarca(buscar);
+            } else {
+                lista = dao.listar();
+            }
+
+            request.setAttribute("listaProductos", lista);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("producto.jsp");
+            dispatcher.forward(request, response);
+            return;
+        }
+    	
+    	
         int page = 1;
 	    int recordsPerPage = 10;
 
